@@ -1,12 +1,19 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { useGroup } from "../providers/GroupProvider";
+import { ExpenseType } from "../providers/ExpenseProvider";
+import { Fragment } from "react";
 
-const ExpenseDetails = (props) => {
-  const { closeModal, Fragment, isOpen, selectedExpense } = props;
+type ExpenseDetailsProps = {
+  isOpen: boolean;
+  closeModal: () => void;
+  selectedExpense: ExpenseType | null;
+};
+const ExpenseDetails = (props: ExpenseDetailsProps) => {
+  const { closeModal, isOpen, selectedExpense } = props;
   const { userMap } = useGroup();
   // const { group } = useGroup();
 
-  // if(!selectedExpense) return null;
+  if (!selectedExpense) return null;
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={closeModal}>

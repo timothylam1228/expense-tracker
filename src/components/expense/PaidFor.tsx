@@ -1,5 +1,4 @@
 import { Checkbox } from "@material-tailwind/react"
-import { useAuth } from "../../providers/AuthProvider"
 import { useGroup } from "../../providers/GroupProvider"
 
 type PaidForProps = {
@@ -10,9 +9,6 @@ type PaidForProps = {
 const PaidFor = (props: PaidForProps) => {
   const { paidFor, setPaidFor } = props
   const { group, userMap } = useGroup()
-  const { user } = useAuth()
-
-  console.log(paidFor, "paidFor")
 
   const handlePaidFor = (member: string) => {
     if (paidFor.includes(member)) {

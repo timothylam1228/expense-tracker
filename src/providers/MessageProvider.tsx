@@ -1,10 +1,5 @@
 import { PropsWithChildren, createContext, useContext, useState } from "react";
-
-export enum MessageType {
-  SUCCESS = "SUCCESS",
-  ERROR = "ERROR",
-  WARNING = "WARNING",
-}
+import { MessageType } from "../utils/enum";
 // Create a Message provider that will be used to display Messages
 const MessageContext = createContext<MessageContextType>({
   message: null,
@@ -14,7 +9,7 @@ const MessageContext = createContext<MessageContextType>({
 
 type MessageContextType = {
   message: string | null;
-  type: MessageType;
+  type: MessageType | null;
   handleSetMessage: (arg0: string | null, arg1: MessageType) => void;
 };
 
@@ -31,7 +26,7 @@ export const MessageProvider: React.FC<PropsWithChildren> = ({ children }) => {
     setType(type);
     setTimeout(() => {
       setMessage(null);
-      setType(MessageType.SUCCESS);
+      setType(null);
     }, 3000);
   };
   const value = {

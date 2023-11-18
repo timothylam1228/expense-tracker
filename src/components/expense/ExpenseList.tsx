@@ -1,11 +1,11 @@
-import { Fragment, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useAuth } from "../../providers/AuthProvider";
 import { firebase_date_converter } from "../../utils/function";
 import { UserIcon } from "@heroicons/react/20/solid";
 import ExpenseDetails from "../../pages/ExpenseDetails";
 import { ExpenseType } from "../../providers/ExpenseProvider";
 
-const ExpenseList = (props) => {
+const ExpenseList = (props: { expenseList: Array<ExpenseType> }) => {
   const { expenseList } = props;
   const { user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
@@ -31,16 +31,15 @@ const ExpenseList = (props) => {
     setIsOpen(false);
   }
 
-  function openModal() {
-    setIsOpen(true);
-  }
-
   const onClickExpense = (expense: ExpenseType) => {
     setSelectedExpense(expense);
     setIsOpen(true);
   };
 
-  const Expense = (props: { expense: ExpenseType; onClick: any }) => {
+  const Expense = (props: {
+    expense: ExpenseType;
+    onClick: (arg: string) => void;
+  }) => {
     const { expense, onClick } = props;
     return (
       <div
@@ -87,8 +86,6 @@ const ExpenseList = (props) => {
         <ExpenseDetails
           isOpen={isOpen}
           closeModal={closeModal}
-          openModal={openModal}
-          Fragment={Fragment}
           selectedExpense={selectedExpense}
         />
       )}

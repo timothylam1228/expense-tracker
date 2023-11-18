@@ -5,7 +5,7 @@ import Amount from "./expense/Amount";
 import WhoPaid from "./expense/WhoPaid";
 import PaidFor from "./expense/PaidFor";
 import { useExpense } from "../providers/ExpenseProvider";
-import { GroupType } from "../providers/GroupProvider";
+import { DocumentData } from "firebase/firestore";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -14,7 +14,7 @@ function classNames(...classes: string[]) {
 const CreateExpense = (props: {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
-  group: GroupType;
+  group: DocumentData;
 }) => {
   const { isOpen, setIsOpen, group } = props;
   const [error, setError] = useState<string>("");

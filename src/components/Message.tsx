@@ -1,4 +1,5 @@
-import { MessageType, useMessage } from "../providers/MessageProvider";
+import { useMessage } from "../providers/MessageProvider";
+import { MessageType } from "../utils/enum";
 
 const Message = () => {
   const { message, type } = useMessage();

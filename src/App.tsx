@@ -2,16 +2,8 @@ import "./App.css";
 import Navbar from "./components/Navbar";
 import Message from "./components/Message";
 import { Outlet } from "react-router-dom";
-import { useState } from "react";
-import { fetchToken, onMessageListener } from "./firebase/firebase.config";
 
 function App() {
-  const [notification, setNotification] = useState({ title: "", body: "" });
-  const [isTokenFound, setTokenFound] = useState(false);
-  const [show, setShow] = useState(false);
-  Notification.requestPermission();
-
-
   // fetchToken(setTokenFound);
 
   // onMessageListener()

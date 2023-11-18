@@ -31,7 +31,7 @@ const firebaseConfig = {
 // measurementId: "G-51WJREBDMH",
 // };
 
-export const fetchToken = (setTokenFound) => {
+export const fetchToken = (setTokenFound: (arg: boolean) => void) => {
   return getToken(messaging, {
     vapidKey:
       "BLNHea8HAv-YWyG1j4exAX-BnUSLaSAvweUzaWOdmvBvRMUIrxBtZzTO6eXFje6AX6xywkwbeDq161_a4AhvA_s",

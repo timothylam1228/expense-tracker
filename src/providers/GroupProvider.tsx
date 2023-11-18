@@ -16,7 +16,8 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase/firebase.config";
 import { useAuth } from "./AuthProvider";
-import { MessageType, useMessage } from "./MessageProvider";
+import { useMessage } from "./MessageProvider";
+import { MessageType } from "../utils/enum";
 
 export type CreateGroupType = {
   title: string;

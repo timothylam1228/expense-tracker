@@ -17,9 +17,10 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase/firebase.config";
 import { useAuth } from "./AuthProvider";
-import { MessageType, useMessage } from "./MessageProvider";
+import { useMessage } from "./MessageProvider";
 import { useGroup } from "./GroupProvider";
 import { v4 as uuidv4 } from "uuid";
+import { MessageType } from "../utils/enum";
 
 export type CreateExpenseType = {
   title: string;
