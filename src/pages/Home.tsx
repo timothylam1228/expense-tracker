@@ -16,7 +16,7 @@ const Home = () => {
 
 
   return (
-    <div className="h-[calc(100vh-50px)] relative flex py-6 mx-2">
+    <div className="mx-2 h-[calc(100vh-50px)] relative flex py-6">
       <CreateGroup isOpen={isOpen} setIsOpen={setIsOpen} />
 
       <div className="grid grid-cols-2 gap-4 w-full h-40">

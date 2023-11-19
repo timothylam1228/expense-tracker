@@ -14,7 +14,7 @@ import {
   getDocs,
   updateDoc,
 } from "firebase/firestore";
-import { db } from "../firebase/firebase.config";
+import { db, auth } from "../firebase/firebase.config";
 import { useAuth } from "./AuthProvider";
 import { useMessage } from "./MessageProvider";
 import { MessageType } from "../utils/enum";
@@ -66,9 +66,10 @@ const GroupProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
   useEffect(() => {
     setLoading(true);
+    console.log("user change");
     getGroups();
     setLoading(false);
-  }, [user]);
+  }, [user, auth]);
 
   const createGroup = async (data: CreateGroupType) => {
     try {
@@ -102,7 +103,10 @@ const GroupProvider: React.FC<PropsWithChildren> = ({ children }) => {
     }
   };
   const getGroups = async () => {
-    if (!user || !user.email) return null;
+    if (!user || !user.email) {
+      setGroups([]);
+      return null;
+    }
     const groupRef = collection(db, "groups");
     const groupSnapshot = await getDocs(groupRef);
     // Get group list when user email is in members

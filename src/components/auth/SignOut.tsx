@@ -1,10 +1,15 @@
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../providers/AuthProvider";
 
-const SignOut = () => {
+const SignOut = (props: { setOpen?: (arg:boolean) => void }) => {
+  const { setOpen } = props;
   const { signOut } = useAuth();
+  const navigate = useNavigate();
 
   const handleSignOut = async () => {
-    signOut();
+    await signOut();
+    setOpen && setOpen(false);
+    navigate("/");
   };
   return (
     <div className="w-fit cursor-pointer">

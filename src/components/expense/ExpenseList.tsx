@@ -5,6 +5,10 @@ import { UserIcon } from "@heroicons/react/20/solid";
 import ExpenseDetails from "../../pages/ExpenseDetails";
 import { ExpenseType } from "../../providers/ExpenseProvider";
 
+type ExpenseListByDate = {
+  [key: string]: ExpenseType[];
+};
+
 const ExpenseList = (props: { expenseList: Array<ExpenseType> }) => {
   const { expenseList } = props;
   const { user } = useAuth();
@@ -15,16 +19,31 @@ const ExpenseList = (props: { expenseList: Array<ExpenseType> }) => {
 
   // modify the expenseList to group by date
   const expenseListByDate = useMemo(() => {
-    return expenseList.reduce((acc, expense: ExpenseType) => {
+    // First, group the expenses by date
+    const groupedByDate = expenseList.reduce((acc, expense) => {
       const date = firebase_date_converter(expense.date);
       if (acc[date]) {
-        acc[date].push(expense);
+        // acc[date].push(expense);
+        acc[date] = [expense, ...acc[date]];
       } else {
         acc[date] = [expense];
       }
-      //   sort the expenseList by date
       return acc;
     }, {});
+
+    // Then, sort the keys (dates) in descending order
+    const sortedDates = Object.keys(groupedByDate).sort((a, b) => {
+      // Assuming 'firebase_date_converter' returns a string in 'YYYY-MM-DD' format
+      return new Date(b).valueOf() - new Date(a).valueOf(); // This will sort in descending order
+    });
+
+    // Construct a new object with sorted dates
+    const sortedExpenses: ExpenseListByDate = {};
+    sortedDates.forEach((date: string) => {
+      sortedExpenses[date] = groupedByDate[date];
+    });
+
+    return sortedExpenses;
   }, [expenseList]);
 
   function closeModal() {

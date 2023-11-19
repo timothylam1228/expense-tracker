@@ -43,12 +43,12 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
-      console.log("authUser", authUser);
       if (authUser) {
         // User is signed in
         setUser(authUser);
       } else {
         // User is signed out
+
         setUser(null);
       }
       setLoading(false);

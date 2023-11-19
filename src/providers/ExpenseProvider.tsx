@@ -108,6 +108,7 @@ const ExpenseProvider: React.FC<PropsWithChildren> = ({ children }) => {
       console.log("!expenses");
       return null;
     }
+    console.log("expenses", expenses)
     setExpenses(expenses.expenses);
     return expenses;
   };

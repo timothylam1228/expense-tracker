@@ -21,7 +21,7 @@ const PaidFor = (props: PaidForProps) => {
     }
   }
   return (
-    <div>
+    <div className="flex w-max flex-col">
       {group &&
         group.members.map((member: string) => {
           return (
