@@ -2,14 +2,9 @@ import {
   IconButton,
   SpeedDial,
   SpeedDialHandler,
-  SpeedDialContent,
-  SpeedDialAction,
 } from "@material-tailwind/react";
 import {
   PlusIcon,
-  HomeIcon,
-  CogIcon,
-  Square3Stack3DIcon,
 } from "@heroicons/react/24/outline";
 
 type CreateGroupButtonProps = {
