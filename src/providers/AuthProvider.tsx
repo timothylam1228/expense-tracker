@@ -1,9 +1,10 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { auth, db } from "../firebase/firebase.config"; // Import your Firebase setup
 import { signInWithGoogle } from "../firebase/auth"; // Import your User type from the authentication module
-import { User, UserCredential } from "firebase/auth";
-import { collection, doc, getDoc, setDoc } from "firebase/firestore";
-
+import { User, UserCredential, updateProfile } from "firebase/auth";
+import { collection, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { useMessage } from "./MessageProvider";
+import { MessageType } from "../utils/enum";
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 type UserProfile = {
@@ -12,11 +13,17 @@ type UserProfile = {
   createdAt: Date;
 };
 
+type UpdateProfile = {
+  displayName: string;
+  email: string;
+};
+
 type AuthContextType = {
   user: User | null;
   loading: boolean;
   signIn: () => Promise<UserCredential>;
   signOut: () => Promise<void>;
+  updateUserProfile: (user: UpdateProfile) => Promise<void>;
 };
 
 export const useAuth = () => {
@@ -32,9 +39,11 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const { handleSetMessage } = useMessage();
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
+      console.log("authUser", authUser);
       if (authUser) {
         // User is signed in
         setUser(authUser);
@@ -94,11 +103,30 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     });
   };
 
+  const updateUserProfile = async (user: UpdateProfile): Promise<void> => {
+    // find user by email
+    updateProfile(auth.currentUser!, {
+      displayName: user.displayName,
+    });
+
+    // update the user
+    const userRef = doc(db, "users", auth.currentUser!.email!);
+    await updateDoc(userRef, {
+      displayName: user.displayName,
+    });
+    const updatedUser = auth.currentUser;
+    setUser(updatedUser);
+    handleSetMessage("Profile updated", MessageType.SUCCESS);
+
+    // re unsubscribe and subscribe to the user
+  };
+
   const value = {
     user,
     loading,
     signIn,
     signOut,
+    updateUserProfile,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

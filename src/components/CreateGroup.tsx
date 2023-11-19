@@ -1,47 +1,47 @@
-import { Dialog, Listbox, Tab, Transition } from "@headlessui/react"
-import { Fragment, useState } from "react"
-import { useGroup } from "../providers/GroupProvider"
-import { currency } from "../utils/currency"
-import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid"
+import { Dialog, Listbox, Tab, Transition } from "@headlessui/react";
+import { Fragment, useState } from "react";
+import { useGroup } from "../providers/GroupProvider";
+import { currency } from "../utils/currency";
+import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 
 function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ")
+  return classes.filter(Boolean).join(" ");
 }
 
 const CreateGroup = (props: {
-  isOpen: boolean
-  setIsOpen: (e: boolean) => void
+  isOpen: boolean;
+  setIsOpen: (e: boolean) => void;
 }) => {
-  const { isOpen, setIsOpen } = props
-  const [groupData, setGroupData] = useState("")
-  const [groupCode, setGroupCode] = useState("")
-  const [selectedCurrecy, setSelectedCurrency] = useState("USD")
-  const { createGroup, joinGroup } = useGroup()
+  const { isOpen, setIsOpen } = props;
+  const [groupData, setGroupData] = useState("");
+  const [groupCode, setGroupCode] = useState("");
+  const [selectedCurrecy, setSelectedCurrency] = useState("USD");
+  const { createGroup, joinGroup } = useGroup();
 
   function closeModal() {
-    setIsOpen(false)
+    setIsOpen(false);
   }
 
   const onChangeGroupData = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setGroupData(e.target.value)
-  }
+    setGroupData(e.target.value);
+  };
   const onChangeGroupCode = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setGroupCode(e.target.value)
-  }
+    setGroupCode(e.target.value);
+  };
 
   const onCreate = async () => {
-    await createGroup({ title: groupData, currency: selectedCurrecy })
-    setIsOpen(false)
-  }
+    await createGroup({ title: groupData, currency: selectedCurrecy });
+    setIsOpen(false);
+  };
   const onJoin = async () => {
-    console.log("join group", groupCode)
+    console.log("join group", groupCode);
     try {
-      await joinGroup(groupCode)
+      await joinGroup(groupCode);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-    setIsOpen(false)
-  }
+    setIsOpen(false);
+  };
   const create_group = (
     <div className="mt-2 flex flex-col">
       <div>
@@ -79,12 +79,12 @@ const CreateGroup = (props: {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Listbox.Options className="absolute overflow-hidden mt-1 max-h-60 w-full rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+              <Listbox.Options className="absolute  justify-evenly flex  overflow-hidden mt-1 max-h-60 w-full rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
                 {currency.map((item) => (
                   <Listbox.Option
                     key={item}
                     className={({ active }) =>
-                      `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                      `relative cursor-default select-none rounded-md py-2 pl-10 pr-4 ${
                         active ? "bg-amber-100 text-amber-900" : "text-gray-900"
                       }`
                     }
@@ -130,7 +130,7 @@ const CreateGroup = (props: {
         </button>
       </div>
     </div>
-  )
+  );
 
   const join_group = (
     <div className="mt-6">
@@ -160,7 +160,7 @@ const CreateGroup = (props: {
         </button>
       </div>
     </div>
-  )
+  );
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10 " onClose={closeModal}>
@@ -206,7 +206,7 @@ const CreateGroup = (props: {
                         >
                           {category}
                         </Tab>
-                      )
+                      );
                     })}
                   </Tab.List>
                   <Tab.Panels>
@@ -220,6 +220,6 @@ const CreateGroup = (props: {
         </div>
       </Dialog>
     </Transition>
-  )
-}
-export default CreateGroup
+  );
+};
+export default CreateGroup;

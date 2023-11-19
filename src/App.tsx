@@ -27,10 +27,9 @@ function App() {
   //   setShow(true);
   // };
   return (
-    <div className="px-2 flex flex-col">
+    <div className=" flex flex-col">
       <Navbar />
       <Message />
-
       <Outlet />
     </div>
   );

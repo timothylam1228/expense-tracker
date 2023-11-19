@@ -6,29 +6,35 @@ const Message = () => {
 
   if (type === MessageType.ERROR)
     return (
-      <div className="w-full absolute bottom-2 items-center justify-center flex">
-        <div className="flex flex-row justify-between bg-red-200 first-line:bg-red-200 rounded-md py-4 px-2 w-11/12">
-          <div>{message}</div>
-          <div>X</div>
+      <div className="fixed bottom-12 items-center justify-center flex w-full">
+        <div className="flex items-center flex-row justify-between bg-red-200 first-line:bg-red-200 rounded-md py-3 px-2 w-11/12">
+          <div className="font-bold">{message}</div>
+          <div className="justify-center flex rounded-full w-8 h-8 items-center">
+            x
+          </div>
         </div>
       </div>
     );
   if (type === MessageType.SUCCESS)
     return (
-      <div className="fixed bottom-24 items-center justify-center flex w-full">
-        <div className="flex flex-row justify-between bg-green-200 first-line:bg-green-200 rounded-md py-4 px-2 w-11/12">
-          <div>{message}</div>
-          <div>X</div>
+      <div className="fixed bottom-12 items-center justify-center flex w-full">
+        <div className="flex flex-row items-center justify-between bg-green-200 first-line:bg-green-200 rounded-md py-3 px-2 w-11/12">
+          <div className="font-bold">{message}</div>
+          <div className="justify-center flex rounded-full w-8 h-8 items-center">
+            x
+          </div>
         </div>
       </div>
     );
 
   if (type === MessageType.WARNING)
     return (
-      <div className="w-full absolute bottom-2 items-center justify-center flex">
-        <div className="flex flex-row justify-between bg-blue-200 first-line:bg-blue-200 rounded-md py-4 px-2 w-11/12">
-          <div>{message}</div>
-          <div>X</div>
+      <div className="fixed bottom-12 items-center justify-center flex w-full">
+        <div className="flex flex-row justify-between bg-blue-200 first-line:bg-blue-200 rounded-md py-3 px-2 w-11/12">
+          <div className="font-bold">{message}</div>
+          <div className="justify-center flex rounded-full w-8 h-8 items-center">
+            x
+          </div>
         </div>
       </div>
     );

@@ -1,13 +1,25 @@
+import { useEffect, useState } from "react";
 import { useAuth } from "../providers/AuthProvider";
-import {
-  Input,
-  Checkbox,
-  Button,
-  Typography,
-} from "@material-tailwind/react";
+import { Input, Button, Typography } from "@material-tailwind/react";
 
 const Profile = () => {
-  const { user, loading } = useAuth();
+  const { user, loading, updateUserProfile } = useAuth();
+  const [displayName, setDisplayName] = useState<string | null>(
+    user ? user.displayName : ""
+  );
+  const [email, setEmail] = useState<string | null>(user ? user.email : "");
+
+  useEffect(() => {
+    if (user) {
+      setDisplayName(user.displayName);
+      setEmail(user.email);
+    }
+  }, [user]);
+
+  const handleSubmit = () => {
+    updateUserProfile({ displayName: displayName!, email: email! });
+    // refresh the page
+  };
 
   if (loading) {
     return <div>loading...</div>;
@@ -16,7 +28,7 @@ const Profile = () => {
     return <div>no user</div>;
   }
   return (
-    <div>
+    <div className="items-center flex justify-center">
       <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
         <div className="mb-1 flex flex-col gap-6">
           <Typography variant="h6" color="blue-gray" className="-mb-3">
@@ -24,7 +36,10 @@ const Profile = () => {
           </Typography>
           <Input
             size="lg"
-            placeholder="name@mail.com"
+            placeholder="Name"
+            value={displayName!}
+            autoComplete="false"
+            onChange={(e) => setDisplayName(e.target.value)}
             className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
             labelProps={{
               className: "before:content-none after:content-none",
@@ -36,20 +51,11 @@ const Profile = () => {
           </Typography>
           <Input
             size="lg"
+            value={email!}
             placeholder="name@mail.com"
-            className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-            labelProps={{
-              className: "before:content-none after:content-none",
-            }}
-            crossOrigin={undefined}
-          />
-          <Typography variant="h6" color="blue-gray" className="-mb-3">
-            Password
-          </Typography>
-          <Input
-            type="password"
-            size="lg"
-            placeholder="********"
+            autoComplete="false"
+            disabled={true}
+            onChange={(e) => setEmail(e.target.value)}
             className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
             labelProps={{
               className: "before:content-none after:content-none",
@@ -57,34 +63,9 @@ const Profile = () => {
             crossOrigin={undefined}
           />
         </div>
-        <Checkbox
-          label={
-            <Typography
-              variant="small"
-              color="gray"
-              className="flex items-center font-normal"
-            >
-              I agree the
-              <a
-                href="#"
-                className="font-medium transition-colors hover:text-gray-900"
-              >
-                &nbsp;Terms and Conditions
-              </a>
-            </Typography>
-          }
-          containerProps={{ className: "-ml-2.5" }}
-          crossOrigin={undefined}
-        />
-        <Button className="mt-6" fullWidth>
-          sign up
+        <Button className="mt-6" fullWidth onClick={() => handleSubmit()}>
+          Save
         </Button>
-        <Typography color="gray" className="mt-4 text-center font-normal">
-          Already have an account?{" "}
-          <a href="#" className="font-medium text-gray-900">
-            Sign In
-          </a>
-        </Typography>
       </form>
     </div>
   );

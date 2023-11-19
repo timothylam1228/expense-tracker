@@ -1,22 +1,47 @@
-import { useState } from "react"
-import { auth } from "../firebase/firebase.config"
-import { useAuth } from "../providers/AuthProvider"
-import SignOut from "./auth/SignOut"
-import { useNavigate } from "react-router-dom"
-import SignIn from "./auth/SignIn"
+import { useState } from "react";
+import { auth } from "../firebase/firebase.config";
+import { useAuth } from "../providers/AuthProvider";
+import SignOut from "./auth/SignOut";
+import { useNavigate } from "react-router-dom";
+import SignIn from "./auth/SignIn";
 
 const Navbar = () => {
-  const { loading } = useAuth()
-  const [open, setOpen] = useState(false)
-  const navigate = useNavigate()
+  const { loading } = useAuth();
+  const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
   if (loading) {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
   }
 
   const handleSidebar = () => {
-    setOpen(!open)
-  }
+    setOpen(!open);
+  };
+
+  const notifyMe = () => {
+    if (!("Notification" in window)) {
+      // Check if the browser supports notifications
+      alert("This browser does not support desktop notification");
+    } else if (Notification.permission === "granted") {
+      console.log("New");
+      // Check whether notification permissions have already been granted;
+      // if so, create a notification
+      new Notification("Example", {
+        body: "This is a notification",
+      });
+      // …
+    } else if (Notification.permission !== "denied") {
+      // We need to ask the user for permission
+      Notification.requestPermission().then((permission) => {
+        // If the user accepts, let's create a notification
+        if (permission === "granted") {
+          new Notification("Hi there!");
+          // …
+        }
+      });
+    }
+  };
+
   const navitems = [
     {
       title: "Home",
@@ -26,7 +51,7 @@ const Navbar = () => {
       title: "Profile",
       path: "/profile",
     },
-  ]
+  ];
   const SideBar = () => {
     return (
       <div className="flex relative flex-col items-center w-full py-12 ">
@@ -39,21 +64,23 @@ const Navbar = () => {
             {navitems.map((item) => (
               <div
                 key={item.title}
-                className="w-fit"
+                className="w-fit cursor-pointer"
                 onClick={() => {
-                  setOpen(false)
-                  navigate(item.path)
+                  setOpen(false);
+                  navigate(item.path);
                 }}
               >
                 {item.title}
               </div>
             ))}
+            <button onClick={notifyMe}>Notify me!</button>
+
             <SignOut />
           </div>
         )}
       </div>
-    )
-  }
+    );
+  };
   return (
     <div className="flex justify-between  py-3 px-6 h-[50px]">
       <div
@@ -76,6 +103,6 @@ const Navbar = () => {
         )}
       </div>
     </div>
-  )
-}
-export default Navbar
+  );
+};
+export default Navbar;

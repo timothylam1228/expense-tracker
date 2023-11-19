@@ -155,6 +155,7 @@ const GroupProvider: React.FC<PropsWithChildren> = ({ children }) => {
     const group = groupSnapshot.data();
     if (!group) return null;
     const members = await getAllMembersUsername(group.members);
+    console.log("getAllMembersUsername");
     setUserMap(members);
     setGroup({ ...group, id });
     return group;
@@ -169,6 +170,7 @@ const GroupProvider: React.FC<PropsWithChildren> = ({ children }) => {
     // map user displayName to members with an object, key is email and value is username
 
     const tempMap = new Map();
+    console.log("users", users);
 
     users.forEach((user: { email: string; displayName: string }) => {
       if (members.includes(user.email)) {
