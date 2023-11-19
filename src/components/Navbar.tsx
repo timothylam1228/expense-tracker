@@ -8,11 +8,18 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 import ReloadPrompt from "./ReloadPrompt";
+import { useNavigate } from "react-router-dom";
+import { auth } from "../firebase/firebase.config";
 const NavbarDefault = () => {
   const { loading } = useAuth();
-  const { signIn } = useAuth();
+  const { signOut, signIn } = useAuth();
+  const navigate = useNavigate();
   const handleSignIn = async () => {
     await signIn();
+  };
+  const handleSignOut = async () => {
+    await signOut();
+    navigate("/");
   };
   const [openNav, setOpenNav] = useState(false);
 
@@ -134,15 +141,27 @@ const NavbarDefault = () => {
         <div className="container mx-auto">
           {navList}
           <div className="flex items-center gap-x-1">
-            <Button
-              fullWidth
-              variant="gradient"
-              size="sm"
-              className=""
-              onClick={() => handleSignIn()}
-            >
-              <span>Sign in</span>
-            </Button>
+            {!auth.currentUser ? (
+              <Button
+                fullWidth
+                variant="gradient"
+                size="sm"
+                className=""
+                onClick={() => handleSignIn()}
+              >
+                <span>Sign In</span>
+              </Button>
+            ) : (
+              <Button
+                fullWidth
+                variant="gradient"
+                size="sm"
+                className=""
+                onClick={() => handleSignOut()}
+              >
+                <span>Sign Out</span>
+              </Button>
+            )}
           </div>
         </div>
       </MobileNav>
