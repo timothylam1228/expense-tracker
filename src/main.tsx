@@ -10,7 +10,14 @@ import App from "./App.tsx";
 import Group from "./pages/Group.tsx";
 import ExpenseProvider from "./providers/ExpenseProvider.tsx";
 import Profile from "./pages/Profile.tsx";
+import { registerSW } from "virtual:pwa-register";
 
+const updateSW = registerSW({
+  onNeedRefresh() {},
+  onOfflineReady() {},
+});
+
+updateSW();
 const router = createBrowserRouter([
   {
     path: "/",
