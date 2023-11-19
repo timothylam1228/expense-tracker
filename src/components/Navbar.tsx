@@ -96,7 +96,7 @@ const NavbarDefault = () => {
           className="mr-4 cursor-pointer py-1.5 font-medium"
           onClick={() => navigate("/")}
         >
-          Expense Tracker
+          Expense
         </Typography>
         <div className="hidden">{navList}</div>
 
