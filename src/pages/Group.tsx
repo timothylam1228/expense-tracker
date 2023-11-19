@@ -49,12 +49,12 @@ const Group = () => {
   if (loading) return <h1>Loading</h1>;
 
   return (
-    <div className="min-h-[calc(100vh-50px)] relative mb-12 mx-2">
+    <div className="min-h-[calc(100vh-50px)] relative mb-12 mx-2 mt-4">
       <CreateExpense isOpen={isOpen} setIsOpen={setIsOpen} group={group} />
       <div className="bottom-2 right-5 fixed">
         <CreateExpenseButton setIsOpen={setIsOpen} />
       </div>
-      <div className="flex flex-col shadow-lg px-6 py-2 border-2 border-red-200 min-h-[200px] justify-between rounded-md bg-red-200">
+      <div className="flex flex-col px-6 py-2 shadow-md backdrop-saturate-200 backdrop-blur-2xl bg-opacity-80 border border-red-200/80 border-red-200 min-h-[200px] justify-between rounded-md bg-red-200">
         <div className=" font-extrabold text-2xl">
           {group.title} ({calculateTotal()})
         </div>
