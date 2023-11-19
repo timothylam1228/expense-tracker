@@ -10,6 +10,9 @@ export default defineConfig({
       devOptions: {
         enabled: true,
       },
+      workbox: {
+        cleanupOutdatedCaches: false,
+      },
       injectRegister: "auto",
       includeAssets: ["icon.png", "icon.svg"],
       manifest: {
