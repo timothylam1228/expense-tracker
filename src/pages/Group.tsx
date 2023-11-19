@@ -7,12 +7,15 @@ import CreateExpense from "../components/CreateExpense";
 import { useExpense } from "../providers/ExpenseProvider";
 import ExpenseList from "../components/expense/ExpenseList";
 import { useAuth } from "../providers/AuthProvider";
+import { useMessage } from "../providers/MessageProvider";
+import { MessageType } from "../utils/enum";
 
 const Group = () => {
   const { id } = useParams<{ id: string }>();
   const [isOpen, setIsOpen] = useState(false);
   const { getGroupById, loading, group } = useGroup();
   const { expenses } = useExpense();
+  const { handleSetMessage } = useMessage();
   const { user } = useAuth();
 
   useEffect(() => {
@@ -39,21 +42,26 @@ const Group = () => {
   const copyCode = () => {
     if (!group) return;
     navigator.clipboard.writeText(group.code);
-  }
+    handleSetMessage("Code copied", MessageType.SUCCESS);
+  };
 
   if (!group) return <h1>No Group</h1>;
   if (loading) return <h1>Loading</h1>;
 
   return (
-    <div className="min-h-[calc(100vh-50px)] relative mb-12">
+    <div className="min-h-[calc(100vh-50px)] relative mb-12 mx-2">
       <CreateExpense isOpen={isOpen} setIsOpen={setIsOpen} group={group} />
       <div className="bottom-2 right-5 fixed">
         <CreateExpenseButton setIsOpen={setIsOpen} />
       </div>
       <div className="flex flex-col shadow-lg px-6 py-2 border-2 border-red-200 min-h-[200px] justify-between rounded-md bg-red-200">
-        <div className=" font-extrabold text-2xl">{group.title} ({calculateTotal()})</div>
+        <div className=" font-extrabold text-2xl">
+          {group.title} ({calculateTotal()})
+        </div>
         <div className="flex flex-col">
-          <label onClick={copyCode} className=" font-thin text-sm">code: {group.code}</label>
+          <label onClick={copyCode} className=" font-thin text-sm">
+            code: {group.code}
+          </label>
           <div className="text-sm">
             Create by: {group.creator} at
             {firebase_date_converter(group.createdAt)}
