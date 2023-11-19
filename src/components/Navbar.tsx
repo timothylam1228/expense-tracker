@@ -7,6 +7,7 @@ import {
   Typography,
   IconButton,
 } from "@material-tailwind/react";
+import ReloadPrompt from "./ReloadPrompt";
 const NavbarDefault = () => {
   const { loading } = useAuth();
   const { signIn } = useAuth();
@@ -74,6 +75,7 @@ const NavbarDefault = () => {
         <a href="/profile" className="flex items-center">
           Profile
         </a>
+        <ReloadPrompt />
       </Typography>
     </ul>
   );
