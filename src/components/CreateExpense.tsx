@@ -6,6 +6,7 @@ import WhoPaid from "./expense/WhoPaid";
 import PaidFor from "./expense/PaidFor";
 import { useExpense } from "../providers/ExpenseProvider";
 import { DocumentData } from "firebase/firestore";
+import TagList from "./expense/TagList";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -30,7 +31,7 @@ const CreateExpense = (props: {
     date: new Date(),
   });
 
-  const categories = ["Amount", "Who Paid", "For Who"];
+  const categories = ["Amount", "Categories", "Who Paid", "For Who"];
 
   function closeModal() {
     setIsOpen(false);
@@ -161,6 +162,9 @@ const CreateExpense = (props: {
                       />
                     </Tab.Panel>
                     <Tab.Panel>
+                      <TagList />
+                    </Tab.Panel>
+                    <Tab.Panel>
                       <WhoPaid whoPaid={whoPaid} setWhoPaid={setWhoPaid} />
                     </Tab.Panel>
                     <Tab.Panel>
@@ -186,8 +190,8 @@ const CreateExpense = (props: {
                   >
                     Cancel
                   </button>
-                  <span className="text-red-300">{error}</span>
                 </div>
+                <span className="text-red-300">{error}</span>
               </Dialog.Panel>
             </Transition.Child>
           </div>

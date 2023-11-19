@@ -31,6 +31,7 @@ export type GroupContextType = {
   createGroup: (data: CreateGroupType) => Promise<void>;
   getGroupById: (id: string) => Promise<DocumentData | null>;
   joinGroup: (code: string) => Promise<void>;
+  addTags: (tags: string[]) => Promise<void>;
 };
 
 export interface GroupType extends DocumentData {
@@ -40,6 +41,7 @@ export interface GroupType extends DocumentData {
   currency: string;
   code: string;
   members: Array<string>;
+  tags?: Array<string>;
 }
 
 const GroupContext = createContext<GroupContextType>({
@@ -50,6 +52,7 @@ const GroupContext = createContext<GroupContextType>({
   createGroup: async () => {},
   getGroupById: async () => Document,
   joinGroup: async () => {},
+  addTags: async () => {},
 });
 
 export const useGroup = () => {
@@ -120,7 +123,6 @@ const GroupProvider: React.FC<PropsWithChildren> = ({ children }) => {
     //   return { ...doc.data(), id: doc.id }
     // })
     setGroups(groupList);
-    console.log("groupList", groupList);
     return groupList;
   };
 
@@ -184,9 +186,19 @@ const GroupProvider: React.FC<PropsWithChildren> = ({ children }) => {
     return tempMap;
   };
 
+  const addTags = async (tags: string[]) => {
+    if (!group) return;
+    const groupRef = doc(db, "groups", group.id);
+    await updateDoc(groupRef, {
+      tags: tags,
+    });
+    getGroupById(group.id);
+  };
+
   const value = {
     groups,
     group,
+    addTags,
     userMap,
     createGroup,
     getGroupById,

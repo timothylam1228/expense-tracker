@@ -25,14 +25,18 @@ const Group = () => {
   }, [id, loading]);
 
   const calculateTotal = () => {
-    if (!expenses || expenses.length === 0 || !user) return;
+    if (!expenses || expenses.length === 0 || !user) return 0;
     let totalExpense = 0;
     expenses.forEach((expense) => {
       const amount = parseFloat(expense.amount);
-      if (!isNaN(amount) && expense.whoPaid !== user.email) {
-        if (expense.forWho.length === 0) return;
-        totalExpense += amount / expense.forWho.length;
-      } else if (expense.whoPaid === user.email) {
+      if (isNaN(amount)) return;
+
+      if (expense.forWho.includes(user.email)) {
+        const sum = amount / expense.forWho.length;
+        console.log("sum", sum);
+        totalExpense += sum;
+      }
+      if (expense.whoPaid === user.email) {
         totalExpense -= amount;
       }
     });
