@@ -1,17 +1,34 @@
+import {
+  IconButton,
+  SpeedDial,
+  SpeedDialHandler,
+} from "@material-tailwind/react";
+import {
+  PlusIcon,
+} from "@heroicons/react/24/outline";
+
 type CreateExpenseButtonProps = {
-  setIsOpen: (callback: (pre: boolean) => boolean) => void
-}
+  setIsOpen: (callback: (pre: boolean) => boolean) => void;
+};
 
 const CreateExpenseButton = (props: CreateExpenseButtonProps) => {
-  const { setIsOpen } = props
+  const { setIsOpen } = props;
 
   return (
     <div
-      onClick={() => setIsOpen((pre: boolean) => !pre)}
-      className="w-fit bg-white cursor-pointer rounded-full border-2 border-black px-6 py-6 items-center justify-center flex text-center"
+      onClick={() => setIsOpen((pre: unknown) => !pre)}
+      className="relative h-80 w-full"
     >
-      <div className="w-2 h-2 flex items-center font-extrabold">+</div>
+      <div className="absolute bottom-0 right-0">
+        <SpeedDial>
+          <SpeedDialHandler>
+            <IconButton size="lg" className="rounded-full">
+              <PlusIcon className="h-5 w-5 transition-transform" />
+            </IconButton>
+          </SpeedDialHandler>
+        </SpeedDial>
+      </div>
     </div>
-  )
-}
-export default CreateExpenseButton
+  );
+};
+export default CreateExpenseButton;
