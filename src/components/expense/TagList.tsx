@@ -1,35 +1,79 @@
 import { Input, Button } from "@material-tailwind/react";
 import { useState } from "react";
+import { useGroup } from "../../providers/GroupProvider";
+import { Chip } from "@material-tailwind/react";
 
-const TagList = () => {
-  const [tag, setTag] = useState("");
-  const onChange = ({ target }) => setTag(target.value);
+const TagList = (props: {
+  setSelectedTags: (tags: string[]) => void;
+  selectedTags: string[];
+}) => {
+  const { setSelectedTags, selectedTags } = props;
+  const { group, addTag } = useGroup();
+  const [tag, setTag] = useState<string>("");
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setTag(e.target.value);
+
+  const handleAddTag = async () => {
+    await addTag(tag);
+    setTag("");
+  };
+  const handleSelectTag = (tag: string) => {
+    if (selectedTags.includes(tag)) {
+      setSelectedTags(selectedTags.filter((t) => t !== tag));
+    } else {
+      setSelectedTags([...selectedTags, tag]);
+    }
+  };
   return (
-    <div>
-      <div className="flex flex-col">
-        <div className="relative flex w-full max-w-[24rem]">
-          <Input
-            type="tag"
-            label="Tag"
-            value={tag}
-            onChange={onChange}
-            className="pr-20"
-            containerProps={{
-              className: "min-w-0",
-            }}
-            crossOrigin={undefined}
-          />
-          <Button
-            size="sm"
-            color={tag ? "gray" : "blue-gray"}
-            disabled={!tag}
-            className="!absolute right-1 top-1 rounded"
-          >
-            Invite
-          </Button>
-        </div>
+    // <div>
+    <div className="flex flex-col w-full mt-4">
+      <div className="relative flex w-full">
+        <Input
+          type="tag"
+          label="Tag"
+          value={tag}
+          onChange={onChange}
+          className="pr-20"
+          containerProps={{
+            className: "min-w-0",
+          }}
+          crossOrigin={undefined}
+        />
+        <Button
+          size="sm"
+          color={tag ? "gray" : "blue-gray"}
+          disabled={!tag}
+          className="!absolute right-1 top-1 rounded"
+          onClick={handleAddTag}
+        >
+          Add
+        </Button>
+      </div>
+      <div className="flex gap-2 mt-2">
+        {group &&
+          group.tags &&
+          group.tags.length > 0 &&
+          group.tags.map((tag: string) => {
+            return (
+              <div
+                className="cursor-pointer"
+                onClick={() => handleSelectTag(tag)}
+                key={tag}
+              >
+                <Chip
+                  variant={`${
+                    selectedTags.includes(tag) ? "gradient" : "ghost"
+                  }`}
+                  color={`${selectedTags.includes(tag) ? "blue" : "gray"}`}
+                  value={tag}
+                />
+              </div>
+            );
+          })}
       </div>
     </div>
+    // </div>
   );
 };
 

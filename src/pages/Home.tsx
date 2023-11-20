@@ -13,8 +13,6 @@ const Home = () => {
     navigate(`/group/${id}`, { relative: "path", state: { id } });
   };
 
-
-
   return (
     <div className="mx-2 h-[calc(100vh-50px)] relative flex py-6">
       <CreateGroup isOpen={isOpen} setIsOpen={setIsOpen} />

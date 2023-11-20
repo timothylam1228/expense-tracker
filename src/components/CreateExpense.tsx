@@ -21,6 +21,8 @@ const CreateExpense = (props: {
   const [error, setError] = useState<string>("");
   const [whoPaid, setWhoPaid] = useState<string>("");
   const [paidFor, setPaidFor] = useState<Array<string>>([]);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+
   const { createExpense, loading, getExpenses, setLoading } = useExpense();
 
   const [expenseData, setExpenseData] = useState({
@@ -162,7 +164,10 @@ const CreateExpense = (props: {
                       />
                     </Tab.Panel>
                     <Tab.Panel>
-                      <TagList />
+                      <TagList
+                        setSelectedTags={setSelectedTags}
+                        selectedTags={selectedTags}
+                      />
                     </Tab.Panel>
                     <Tab.Panel>
                       <WhoPaid whoPaid={whoPaid} setWhoPaid={setWhoPaid} />
