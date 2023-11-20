@@ -80,15 +80,8 @@ const ExpenseList = (props: { expenseList: Array<ExpenseType> }) => {
         <div className="flex gap-2 items-end">
           {expense.tags &&
             expense.tags.length > 0 &&
-            expense.tags.map((tag) => {
-              return (
-                <Chip
-                  size="sm"
-                  key={tag}
-                  color="blue"
-                  value={tag}
-                />
-              );
+            expense.tags.map((tag: string) => {
+              return <Chip size="sm" key={tag} color="blue" value={tag} />;
             })}
         </div>
         <div className="flex items-start">
