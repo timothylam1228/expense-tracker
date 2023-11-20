@@ -108,7 +108,7 @@ const ExpenseProvider: React.FC<PropsWithChildren> = ({ children }) => {
       console.log("!expenses");
       return null;
     }
-    console.log("expenses", expenses)
+    console.log("expenses", expenses);
     setExpenses(expenses.expenses);
     return expenses;
   };
@@ -136,8 +136,6 @@ const ExpenseProvider: React.FC<PropsWithChildren> = ({ children }) => {
     const expenses = expenseSnapshot.docs.map((doc: DocumentData) => {
       return { ...doc.data(), id: doc.id };
     });
-
-    console.log("expenses", expenses);
 
     if (!expenses) return null;
     const expense = expenses.find((expense: ExpenseType) => {

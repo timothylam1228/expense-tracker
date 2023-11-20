@@ -190,7 +190,28 @@ const GroupProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const addTag = async (tag: string) => {
     if (!group) return;
     const groupRef = doc(db, "groups", group.id);
-    // push tag to tags array
+
+    // Initialize tags if it does not exist
+    if (!group.tags) {
+      await updateDoc(groupRef, {
+        tags: [tag],
+      });
+      getGroupById(group.id);
+      return;
+    }
+
+    // Use a more efficient way to check if the tag exists
+    // Convert both the existing tags and the new tag to the same case (upper or lower) for comparison
+    const tagUpper = tag.toUpperCase();
+    const isExist = group.tags.some(
+      (existingTag: string) => existingTag.toUpperCase() === tagUpper
+    );
+
+    if (isExist) {
+      handleSetMessage("Tag already exist", MessageType.ERROR);
+      return;
+    }
+
     const newTags = [...group.tags, tag];
     await updateDoc(groupRef, {
       tags: newTags,

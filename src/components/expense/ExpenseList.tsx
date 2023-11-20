@@ -4,6 +4,7 @@ import { firebase_date_converter } from "../../utils/function";
 import { UserIcon } from "@heroicons/react/20/solid";
 import ExpenseDetails from "../../pages/ExpenseDetails";
 import { ExpenseType } from "../../providers/ExpenseProvider";
+import { Chip } from "@material-tailwind/react";
 
 type ExpenseListByDate = {
   [key: string]: ExpenseType[];
@@ -75,6 +76,20 @@ const ExpenseList = (props: { expenseList: Array<ExpenseType> }) => {
                 : 0}
             </div>
           </div>
+        </div>
+        <div className="flex gap-2 items-end">
+          {expense.tags &&
+            expense.tags.length > 0 &&
+            expense.tags.map((tag) => {
+              return (
+                <Chip
+                  size="sm"
+                  key={tag}
+                  color="blue"
+                  value={tag}
+                />
+              );
+            })}
         </div>
         <div className="flex items-start">
           {expense.whoPaid === user?.email ? (

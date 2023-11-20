@@ -2,12 +2,14 @@ import { Input, Button } from "@material-tailwind/react";
 import { useState } from "react";
 import { useGroup } from "../../providers/GroupProvider";
 import { Chip } from "@material-tailwind/react";
+import { ExpenseType } from "../../providers/ExpenseProvider";
 
-const TagList = (props: {
-  setSelectedTags: (tags: string[]) => void;
-  selectedTags: string[];
-}) => {
-  const { setSelectedTags, selectedTags } = props;
+type TagListType = {
+  onChangeGroupTag: (e: string) => void;
+  expenseData: ExpenseType;
+};
+const TagList = (props: TagListType) => {
+  const { expenseData, onChangeGroupTag } = props;
   const { group, addTag } = useGroup();
   const [tag, setTag] = useState<string>("");
 
@@ -18,13 +20,7 @@ const TagList = (props: {
     await addTag(tag);
     setTag("");
   };
-  const handleSelectTag = (tag: string) => {
-    if (selectedTags.includes(tag)) {
-      setSelectedTags(selectedTags.filter((t) => t !== tag));
-    } else {
-      setSelectedTags([...selectedTags, tag]);
-    }
-  };
+
   return (
     // <div>
     <div className="flex flex-col w-full mt-4">
@@ -58,14 +54,15 @@ const TagList = (props: {
             return (
               <div
                 className="cursor-pointer"
-                onClick={() => handleSelectTag(tag)}
+                onClick={() => onChangeGroupTag(tag)}
                 key={tag}
+                id="tag"
               >
                 <Chip
                   variant={`${
-                    selectedTags.includes(tag) ? "gradient" : "ghost"
+                    expenseData.tags.includes(tag) ? "gradient" : "ghost"
                   }`}
-                  color={`${selectedTags.includes(tag) ? "blue" : "gray"}`}
+                  color={`${expenseData.tags.includes(tag) ? "blue" : "gray"}`}
                   value={tag}
                 />
               </div>

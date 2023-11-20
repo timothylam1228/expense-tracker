@@ -12,6 +12,14 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
+type ExpenseDataType = {
+  title: string;
+  amount: number;
+  currency: string;
+  description?: string;
+  date: Date;
+  tags: Array<string>;
+};
 const CreateExpense = (props: {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
@@ -21,16 +29,16 @@ const CreateExpense = (props: {
   const [error, setError] = useState<string>("");
   const [whoPaid, setWhoPaid] = useState<string>("");
   const [paidFor, setPaidFor] = useState<Array<string>>([]);
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   const { createExpense, loading, getExpenses, setLoading } = useExpense();
 
-  const [expenseData, setExpenseData] = useState({
+  const [expenseData, setExpenseData] = useState<ExpenseDataType>({
     title: "",
     amount: 0,
     currency: group.currency,
     description: "",
     date: new Date(),
+    tags: [],
   });
 
   const categories = ["Amount", "Categories", "Who Paid", "For Who"];
@@ -81,6 +89,7 @@ const CreateExpense = (props: {
       currency: group.currency,
       description: "",
       date: new Date(),
+      tags: [],
     });
     setIsOpen(false);
   };
@@ -93,6 +102,19 @@ const CreateExpense = (props: {
     });
   };
 
+  const onChangeGroupTag = (tag: string) => {
+    if (expenseData.tags.includes(tag)) {
+      setExpenseData({
+        ...expenseData,
+        tags: expenseData.tags.filter((item) => item !== tag),
+      });
+    } else {
+      setExpenseData({
+        ...expenseData,
+        tags: [...expenseData.tags, tag],
+      });
+    }
+  };
   const onChangeCurrency = (e: string) => {
     setExpenseData({
       ...expenseData,
@@ -165,8 +187,8 @@ const CreateExpense = (props: {
                     </Tab.Panel>
                     <Tab.Panel>
                       <TagList
-                        setSelectedTags={setSelectedTags}
-                        selectedTags={selectedTags}
+                        expenseData={expenseData}
+                        onChangeGroupTag={onChangeGroupTag}
                       />
                     </Tab.Panel>
                     <Tab.Panel>
