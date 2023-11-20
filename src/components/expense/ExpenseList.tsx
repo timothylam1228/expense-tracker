@@ -64,11 +64,11 @@ const ExpenseList = (props: { expenseList: Array<ExpenseType> }) => {
     return (
       <div
         onClick={() => onClick(expense.id)}
-        className="flex justify-between border-2 my-2 px-2 rounded-md shadow-md py-4 cursor-pointer"
+        className="grid grid-cols-5 border-2 my-2 px-2 rounded-md shadow-md py-4 cursor-pointer"
       >
-        <div className="flex gap-4">
+        <div className="flex col-span-1 gap-4">
           <div>
-            <div>{expense.title}</div>
+            <span className="flex line-clamp-2">{expense.title}</span>
             <div className="flex h-6 w-6 text-gray-700">
               <UserIcon />
               {expense.forWho && expense.forWho.length > 0
@@ -77,14 +77,14 @@ const ExpenseList = (props: { expenseList: Array<ExpenseType> }) => {
             </div>
           </div>
         </div>
-        <div className="flex gap-2 items-end">
+        <div className="flex gap-2 col-span-3 items-end flex-wrap px-6 w-full h-fit">
           {expense.tags &&
             expense.tags.length > 0 &&
             expense.tags.map((tag: string) => {
               return <Chip size="sm" key={tag} color="blue" value={tag} />;
             })}
         </div>
-        <div className="flex items-start">
+        <div className="flex items-start col-span-1">
           {expense.whoPaid === user?.email ? (
             <div className="text-green-300">You Paid ${expense.amount}</div>
           ) : (

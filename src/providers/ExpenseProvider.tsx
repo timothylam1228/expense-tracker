@@ -105,10 +105,8 @@ const ExpenseProvider: React.FC<PropsWithChildren> = ({ children }) => {
     const expenseSnapshot = await getDoc(expenseRef);
     const expenses = expenseSnapshot.data();
     if (!expenses) {
-      console.log("!expenses");
       return null;
     }
-    console.log("expenses", expenses);
     setExpenses(expenses.expenses);
     return expenses;
   };
@@ -116,10 +114,6 @@ const ExpenseProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const getExpenseById = async (id: string) => {
     console.log("expenses start");
 
-    // if (!group) {
-    //   handleSetError("Please join group first");
-    //   return;
-    // }
     if (!user) {
       handleSetMessage("Please login first", MessageType.ERROR);
       return;
@@ -128,11 +122,7 @@ const ExpenseProvider: React.FC<PropsWithChildren> = ({ children }) => {
     const expenseRef = collection(db, "expenses");
     // query expense by amount
     const q = query(expenseRef, where("expense", "array-contains", { id: id }));
-    console.log("expenses q", q);
-
     const expenseSnapshot = await getDocs(q);
-    console.log("expenses start", expenseSnapshot);
-
     const expenses = expenseSnapshot.docs.map((doc: DocumentData) => {
       return { ...doc.data(), id: doc.id };
     });

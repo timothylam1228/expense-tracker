@@ -2,6 +2,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { useGroup } from "../providers/GroupProvider";
 import { ExpenseType } from "../providers/ExpenseProvider";
 import { Fragment } from "react";
+import { Chip } from "@material-tailwind/react";
 
 type ExpenseDetailsProps = {
   isOpen: boolean;
@@ -66,6 +67,14 @@ const ExpenseDetails = (props: ExpenseDetailsProps) => {
                         )}
                       </div>
                     )}
+                  </div>
+                </div>
+                <div className="mt-2">
+                  <div>Tags:</div>
+                  <div className="flex gap-2">
+                    {selectedExpense.tags.map((tag: string) => {
+                      return <Chip value={tag} key={tag} color="blue" />;
+                    })}
                   </div>
                 </div>
                 <div className="mt-4">
