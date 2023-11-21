@@ -17,11 +17,11 @@ const Home = () => {
     <div className="mx-2 h-[calc(100vh-50px)] relative flex py-6">
       <CreateGroup isOpen={isOpen} setIsOpen={setIsOpen} />
 
-      <div className="grid grid-cols-2 gap-4 w-full h-40">
+      <div className="w-full h-40">
         {groups.map((group: GroupType) => {
           return (
             <div
-              className="border-2 py-12 text-center rounded-md flex flex-col items-center justify-center cursor-pointer hover:bg-gray-200 transition-all"
+              className="border border-black shadow-md backdrop-saturate-200 backdrop-blur-2xl bg-opacity-80 py-12 text-center rounded-md flex flex-col items-center justify-center cursor-pointer hover:bg-gray-200 transition-all"
               onClick={() => handleGroupClick(group.id)}
               key={group.id}
             >

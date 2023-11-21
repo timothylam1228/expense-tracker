@@ -70,7 +70,6 @@ const ExpenseDetails = (props: ExpenseDetailsProps) => {
                   </div>
                 </div>
                 <div className="mt-2">
-                  <div>Tags:</div>
                   <div className="flex gap-2">
                     {selectedExpense.tags.map((tag: string) => {
                       return <Chip value={tag} key={tag} color="blue" />;

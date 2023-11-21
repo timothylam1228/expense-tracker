@@ -156,7 +156,7 @@ const CreateExpense = (props: {
                   Create Expense
                 </Dialog.Title>
                 <Tab.Group>
-                  <Tab.List className="flex mt-4 space-x-1 rounded-xl bg-blue-500/20 p-1">
+                  <Tab.List className="flex flex-wrap mt-4 space-x-1 rounded-xl bg-blue-500/20 p-1">
                     {categories &&
                       categories.map((category) => {
                         return (

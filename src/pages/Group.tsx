@@ -58,7 +58,7 @@ const Group = () => {
       <div className="bottom-2 right-5 fixed">
         <CreateExpenseButton setIsOpen={setIsOpen} />
       </div>
-      <div className="flex flex-col px-6 py-2 shadow-md backdrop-saturate-200 backdrop-blur-2xl bg-opacity-80 border border-red-200/80 border-red-200 min-h-[200px] justify-between rounded-md bg-red-200">
+      <div className="flex flex-col px-6 py-2 shadow-md backdrop-saturate-200 backdrop-blur-2xl bg-opacity-80 border border-red-200/80 border-red-200 min-h-[200px] justify-between rounded-3xl bg-red-200">
         <div className=" font-extrabold text-2xl">
           {group.title} ({calculateTotal()})
         </div>

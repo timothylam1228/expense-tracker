@@ -64,40 +64,45 @@ const ExpenseList = (props: { expenseList: Array<ExpenseType> }) => {
     return (
       <div
         onClick={() => onClick(expense.id)}
-        className="grid grid-cols-5 border-2 my-2 px-2 rounded-md shadow-md py-4 cursor-pointer"
+        className="grid grid-cols-7 border-2 my-2 px-2 rounded-2xl shadow-md py-4 cursor-pointer"
       >
-        <div className="flex col-span-1 gap-4">
+        <div className="flex flex-col col-span-5 gap-1">
+          <div className="flex flex-row">
+            <span className="line-clamp-1">
+              {expense.title}
+            </span>
+          </div>
           <div>
-            <span className="flex line-clamp-2">{expense.title}</span>
-            <div className="flex h-6 w-6 text-gray-700">
-              <UserIcon />
-              {expense.forWho && expense.forWho.length > 0
-                ? expense.forWho.length
-                : 0}
+            <div className="flex gap-2 items-end flex-wrap w-full h-fit">
+              {expense.tags &&
+                expense.tags.length > 0 &&
+                expense.tags.map((tag: string) => {
+                  return <Chip size="sm" key={tag} color="blue" value={tag} />;
+                })}
             </div>
           </div>
         </div>
-        <div className="flex gap-2 col-span-3 items-end flex-wrap px-6 w-full h-fit">
-          {expense.tags &&
-            expense.tags.length > 0 &&
-            expense.tags.map((tag: string) => {
-              return <Chip size="sm" key={tag} color="blue" value={tag} />;
-            })}
+        <div className="flex text-gray-700 col-span-1 items-center justify-center">
+          <UserIcon width={20} height={20} />
+          {expense.forWho && expense.forWho.length > 0
+            ? expense.forWho.length
+            : 0}
         </div>
-        <div className="flex items-start col-span-1">
+
+        <div className="flex col-span-1 items-center justify-center">
           {expense.whoPaid === user?.email ? (
-            <div className="text-green-300">You Paid ${expense.amount}</div>
+            <div className="text-green-300">${expense.amount}</div>
           ) : (
             <>
               {expense.forWho.includes(user?.email) ? (
                 <>
                   <div className="text-red-300">
-                    You Own ${expense.amount / expense.forWho.length}
+                    ${expense.amount / expense.forWho.length}
                   </div>
                 </>
               ) : (
                 <>
-                  <div className="text-red-300">Not includes</div>
+                  <div className="text-red-300">/</div>
                 </>
               )}
             </>

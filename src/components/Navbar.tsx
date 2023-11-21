@@ -6,6 +6,7 @@ import {
   Button,
   Typography,
   IconButton,
+  Collapse,
 } from "@material-tailwind/react";
 import ReloadPrompt from "./ReloadPrompt";
 import { useNavigate } from "react-router-dom";
@@ -138,7 +139,7 @@ const NavbarDefault = () => {
           )}
         </IconButton>
       </div>
-      <MobileNav open={openNav}>
+      <Collapse open={openNav}>
         <div className="container mx-auto">
           {navList}
           <div className="flex items-center gap-x-1">
@@ -165,7 +166,7 @@ const NavbarDefault = () => {
             )}
           </div>
         </div>
-      </MobileNav>
+      </Collapse>
     </Navbar>
   );
 };
