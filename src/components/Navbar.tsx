@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../providers/AuthProvider";
 import {
   Navbar,
-  MobileNav,
   Button,
   Typography,
   IconButton,
