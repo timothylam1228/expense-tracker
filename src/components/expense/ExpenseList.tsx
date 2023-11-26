@@ -113,7 +113,7 @@ const ExpenseList = (props: { expenseList: Array<ExpenseType> }) => {
   };
 
   return (
-    <div className="mt-12">
+    <div className="">
       {isOpen && (
         <ExpenseDetails
           isOpen={isOpen}
@@ -129,13 +129,11 @@ const ExpenseList = (props: { expenseList: Array<ExpenseType> }) => {
               <div className="font-bold">{date}</div>
               {expenseListByDate[date].map(
                 (expense: ExpenseType, idx: number) => {
-                  console.log("expense", expense);
                   return (
                     <Expense
                       key={idx}
                       expense={expense}
                       onClick={() => onClickExpense(expense)}
-
                       // onClickExpense={onClickExpense}
                     />
                   );

@@ -9,6 +9,7 @@ import ExpenseList from "../components/expense/ExpenseList";
 import { useAuth } from "../providers/AuthProvider";
 import { useMessage } from "../providers/MessageProvider";
 import { MessageType } from "../utils/enum";
+import { Input } from "@material-tailwind/react";
 
 const Group = () => {
   const { id } = useParams<{ id: string }>();
@@ -16,6 +17,7 @@ const Group = () => {
   const { getGroupById, loading, group } = useGroup();
   const { expenses } = useExpense();
   const { handleSetMessage } = useMessage();
+  const [tagSearch, setTagSearch] = useState<string>("");
   const { user } = useAuth();
 
   useEffect(() => {
@@ -53,7 +55,7 @@ const Group = () => {
   if (loading) return <h1>Loading</h1>;
 
   return (
-    <div className="min-h-[calc(100vh-50px)] relative mb-12 mx-2 mt-4">
+    <div className="min-h-[calc(100vh-50px)] flex flex-col gap-y-4 relative mb-12 mx-2 mt-4">
       <CreateExpense isOpen={isOpen} setIsOpen={setIsOpen} group={group} />
       <div className="bottom-2 right-5 fixed">
         <CreateExpenseButton setIsOpen={setIsOpen} />
@@ -71,6 +73,14 @@ const Group = () => {
             {firebase_date_converter(group.createdAt)}
           </div>
         </div>
+      </div>
+      <div>
+        <Input
+          label="Tag"
+          value={tagSearch}
+          onChange={(e) => setTagSearch(e.target.value)}
+          crossOrigin={undefined}
+        />
       </div>
       <div>{expenses && <ExpenseList expenseList={expenses} />}</div>
     </div>

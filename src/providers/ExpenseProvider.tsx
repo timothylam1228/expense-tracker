@@ -80,9 +80,14 @@ const ExpenseProvider: React.FC<PropsWithChildren> = ({ children }) => {
       const expenseSnapshot = await getDoc(expenseRef);
       if (expenseSnapshot.exists()) {
         const expense = expenseSnapshot.data();
-        console.log(expense, "expense");
         // generate random ID store in firestore
         const id = uuidv4();
+        if(data.whoPaid === ""){
+          throw new Error("Please select who paid");
+        }
+        if(data.forWho.length === 0){
+          throw new Error("Please select who paid for");
+        }
         expense.expenses = [...expense.expenses, { ...data, id }];
         await updateDoc(expenseRef, expense);
       } else {

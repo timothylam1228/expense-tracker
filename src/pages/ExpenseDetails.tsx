@@ -44,16 +44,24 @@ const ExpenseDetails = (props: ExpenseDetailsProps) => {
               <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900 flex-row flex gap-4"
+                  className="text-lg font-medium leading-6 text-gray-900 flex "
                 >
                   <div>{selectedExpense && selectedExpense.title}</div>
-                  <div>({selectedExpense && selectedExpense.amount})</div>
                 </Dialog.Title>
+                <Dialog.Description>
+                  <div className="text-sm text-gray-500">
+                    {selectedExpense && selectedExpense.description}
+                  </div>
+                </Dialog.Description>
 
-                <div className="flex">
-                  <div className="mt-2 flex flex-col flex-1">
+                <div className="flex flex-col">
+                  <div className="mt-2 flex flex-1 justify-between">
                     <div>Paid By:</div>
+                    <div>Amount</div>
+                  </div>
+                  <div className="flex flex-1 justify-between border-b">
                     <div> {userMap.get(selectedExpense.whoPaid)}</div>
+                    <div className="">${selectedExpense.amount}</div>
                   </div>
 
                   <div className="mt-2 flex-1">
@@ -62,7 +70,17 @@ const ExpenseDetails = (props: ExpenseDetailsProps) => {
                         Paid For:
                         {selectedExpense.forWho.map(
                           (user: string, idx: number) => {
-                            return <div key={idx}>{userMap.get(user)}</div>;
+                            return (
+                              <div className="flex justify-between">
+                                <div key={idx} className="border-b">
+                                  {userMap.get(user)}
+                                </div>
+                                <div>
+                                  {selectedExpense.amount /
+                                    selectedExpense.forWho.length}
+                                </div>
+                              </div>
+                            );
                           }
                         )}
                       </div>
@@ -70,7 +88,7 @@ const ExpenseDetails = (props: ExpenseDetailsProps) => {
                   </div>
                 </div>
                 <div className="mt-2">
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 flex-wrap">
                     {selectedExpense.tags.map((tag: string) => {
                       return <Chip value={tag} key={tag} color="blue" />;
                     })}

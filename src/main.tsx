@@ -10,6 +10,7 @@ import App from "./App.tsx";
 import Group from "./pages/Group.tsx";
 import ExpenseProvider from "./providers/ExpenseProvider.tsx";
 import Profile from "./pages/Profile.tsx";
+import Tips from "./pages/Tips.tsx";
 import { registerSW } from "virtual:pwa-register";
 
 const updateSW = registerSW({
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
         path: "/profile",
         element: <Profile />,
       },
+      {
+        path: "/tips",
+        element: <Tips />
+      }
     ],
   },
 ]);
