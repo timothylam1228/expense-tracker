@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useGroup } from "../providers/GroupProvider";
 import { useParams } from "react-router-dom";
 import { firebase_date_converter } from "../utils/function";
@@ -51,6 +51,18 @@ const Group = () => {
     handleSetMessage("Code copied", MessageType.SUCCESS);
   };
 
+  const filterByTag = useMemo(() => {
+    console.log("filter by tag", tagSearch, expenses);
+    if (!expenses || expenses.length === 0) return [];
+    if (!tagSearch) return expenses;
+
+    // return the expenses that contain the tag by character
+    return expenses.filter((expense) => {
+      if (!expense.tags) return false;
+      return expense.tags.some((tag: string) => tag.toLowerCase().includes(tagSearch.toLowerCase()));
+    });
+  }, [tagSearch, expenses]);
+
   if (!group) return <h1>No Group</h1>;
   if (loading) return <h1>Loading</h1>;
 
@@ -82,7 +94,7 @@ const Group = () => {
           crossOrigin={undefined}
         />
       </div>
-      <div>{expenses && <ExpenseList expenseList={expenses} />}</div>
+      <div>{expenses && <ExpenseList expenseList={filterByTag} />}</div>
     </div>
   );
 };

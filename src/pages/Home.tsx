@@ -17,7 +17,7 @@ const Home = () => {
     <div className="mx-2 h-[calc(100vh-50px)] relative flex py-6">
       <CreateGroup isOpen={isOpen} setIsOpen={setIsOpen} />
 
-      <div className="w-full h-40">
+      <div className="w-full flex flex-col gap-4 h-40">
         {groups.map((group: GroupType) => {
           return (
             <div

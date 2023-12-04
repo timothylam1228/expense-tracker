@@ -78,6 +78,10 @@ const GroupProvider: React.FC<PropsWithChildren> = ({ children }) => {
     try {
       setLoading(true);
       if (!user) throw new Error("Please login first");
+      if (!data.title){
+        handleSetMessage("Please enter group name", MessageType.ERROR);
+        return;
+      }
       const groupRef = collection(db, "groups");
       const expenseRef = collection(db, "expenses");
       const expense = await addDoc(expenseRef, {
